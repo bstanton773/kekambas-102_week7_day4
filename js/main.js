@@ -81,7 +81,7 @@
 {
     // Grab the form
     let form = document.getElementById('countryForm');
-    console.log(form);
+    // console.log(form);
 
     // Create a function to handle submit event
     async function handleSubmit(e){
@@ -90,9 +90,7 @@
         let countryName = e.target.countryName.value;
         // console.log(countryName);
         let countryInfo = await getCountryInfo(countryName);
-        console.log(countryInfo);
-        console.log(typeof countryInfo);
-
+        buildCountryCard(countryInfo);
         // Clear the input of the country name
         e.target.countryName.value = '';
     }
@@ -104,6 +102,51 @@
         let data = await response.json()
         // console.log(data[0]);
         return data[0]
+    }
+
+    // Function that will take in a country object and build an HTML card and append to the country Display
+    function buildCountryCard(countryObj){
+        // Create a card div
+        let card = document.createElement('div');
+        card.className = 'card h-100';
+
+        // Create a top image
+        let image = document.createElement('img');
+        image.className = 'card-img-top';
+        image.src = countryObj.flags.png;
+        // Add image as a child to the card div
+        card.append(image);
+
+        // Create card body
+        let cardBody = document.createElement('div');
+        cardBody.className = 'card-body';
+
+        // Create country name and population elements
+        let countryTitle = document.createElement('h5');
+        countryTitle.className = 'card-title';
+        countryTitle.innerHTML = countryObj.name.official;
+
+        let countryPopulation = document.createElement('p');
+        countryPopulation.className = 'card-text';
+        countryPopulation.innerHTML = `Population: ${countryObj.population.toLocaleString('en-US')}`;
+
+        // Add title and population to the card body
+        cardBody.append(countryTitle);
+        cardBody.append(countryPopulation);
+
+        // Add the card body to the card
+        card.append(cardBody);
+
+        // Create a column for the row
+        let col = document.createElement('div');
+        col.className = 'col-12 col-md-6 col-lg-3 my-3';
+
+        // Add the card as a child to the columnd
+        col.append(card);
+
+        // Get the country display row and add the column
+        let display = document.getElementById('countryDisplay');
+        display.append(col);
     }
     
     // Add handleSubmit function to the form as a listener to the submit event
