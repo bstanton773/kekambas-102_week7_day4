@@ -76,3 +76,36 @@
         });
      };
 };
+
+// Get the country name from the form and display on the page
+{
+    // Grab the form
+    let form = document.getElementById('countryForm');
+    console.log(form);
+
+    // Create a function to handle submit event
+    async function handleSubmit(e){
+        e.preventDefault(); // Prevent the event from refreshing the page
+        // console.log(e);
+        let countryName = e.target.countryName.value;
+        // console.log(countryName);
+        let countryInfo = await getCountryInfo(countryName);
+        console.log(countryInfo);
+        console.log(typeof countryInfo);
+
+        // Clear the input of the country name
+        e.target.countryName.value = '';
+    }
+
+    // Function that takes in a country name, makes the request to the API, and returns a JavaScript object
+    async function getCountryInfo(countryName){
+        let response = await fetch(`https://restcountries.com/v3.1/name/${countryName}`);
+        // console.log(response)
+        let data = await response.json()
+        // console.log(data[0]);
+        return data[0]
+    }
+    
+    // Add handleSubmit function to the form as a listener to the submit event
+    form.addEventListener('submit', handleSubmit);
+}
