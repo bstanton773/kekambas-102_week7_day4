@@ -152,3 +152,25 @@
     // Add handleSubmit function to the form as a listener to the submit event
     form.addEventListener('submit', handleSubmit);
 }
+
+// Add autocomplete
+{
+    let formInput = document.querySelector("#countryName");
+
+    formInput.addEventListener('input', async (e) => {
+        console.log(e)
+        console.log(e.target.value)
+        let res = await fetch(`https://restcountries.com/v3.1/name/${e.target.value}`)
+        let data = await res.json()
+        // console.log(data);
+        let countries = document.createElement('ul');
+        for (let country of data){
+            console.log(country.name.official);
+            c = document.createElement('li');
+            c.innerHTML = country.name.official;
+            countries.append(c);
+        };
+        let form = document.getElementById('countryForm');
+        form.after(countries);
+    })
+}
