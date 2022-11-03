@@ -26,6 +26,7 @@
     newHeader.id = 'myHeader';
     newHeader.className = 'text-center mt-3';
     newHeader.innerHTML = 'Created by Brian with the help of JavaScript';
+    newHeader.style.color = 'black';
 
     // Get the row of buttons
     let allRows = document.getElementsByClassName('row');
@@ -33,5 +34,45 @@
 
     // Add the new header AFTER the button row (vs appending to the end)
     buttonRow.after(newHeader);
-}
+};
 
+// Create a new scope
+{
+    // Get the new header that we created
+    let myHeader = document.getElementById('myHeader');
+    // console.log(myHeader);
+
+    // Create our listener function - function to be executed when our event triggers
+    function handleHeaderEvent(event){
+        // console.log(event);
+        let elementToChange = event.target;
+        // console.log(elementToChange);
+        if (elementToChange.style.color === 'black'){
+            elementToChange.style.color = 'red';
+        } else {
+            elementToChange.style.color = 'black';
+        };
+    };
+
+    // Add the handleHeaderEvent function as an event listener on the header
+    myHeader.addEventListener('mouseover', handleHeaderEvent);
+
+};
+
+// Add event listeners for our buttons
+{
+     // Create an array for the colors
+     let buttonColors = ['primary', 'secondary', 'success', 'warning', 'danger', 'info'];
+
+     // Get the color buttons
+     let colorButtons = document.querySelectorAll('.col-2 > button');
+
+     for (let i = 0; i < colorButtons.length; i++){
+        let button = colorButtons[i];
+        let color = buttonColors[i];
+        button.addEventListener('click', () => {
+            let body = document.body;
+            body.className = `bg-${color}`
+        });
+     };
+};
