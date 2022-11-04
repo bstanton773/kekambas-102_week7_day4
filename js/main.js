@@ -1,5 +1,7 @@
 // console.log('Hello this is the main');
+import { myAPIKey } from "./myAPIKey.js";
 
+console.log(myAPIKey);
 // Create a Block to limit our scope of variables
 {
     // set the navbar to dark by replacing the word 'light' with 'dark' in className
